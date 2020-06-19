@@ -131,5 +131,6 @@ dependencies {
     implementation rootProject.ext.rxAnimations
     //implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
 
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
 
 }

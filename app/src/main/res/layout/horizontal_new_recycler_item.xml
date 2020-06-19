@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/viewParent.headerText"
+        android:textSize="16sp"
+        tools:text="Google’s new free app teaches kids  \nto read by listening to them" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        tools:src="@drawable/image" />
+
+    <TextView
+        style="@style/miniTitle"
+        android:layout_marginTop="5dp"
+        android:maxLines="2"
+        android:textColor="@color/featuredNewsContentColor"
+        tools:text="Google has just ripped the beta label off Rivet, its \nfree mobile app designed to help young children learn to read. " />
+</LinearLayout>

@@ -38,8 +38,8 @@ class HomeFragment : BaseFragment(), KodeinAware {
         val latestNews = viewModel.newsObjet.await()
         latestNews.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it == null) return@Observer
-           // binding.doss.text = it.articles.get(0).urlToImage
-            //binding.progressCircular.visibility = View.GONE
+
+            binding.progressCircular.visibility = View.GONE
         })
     }
 }

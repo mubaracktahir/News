@@ -8,18 +8,37 @@
         <item name="colorAccent">@color/splashFragmentBackground</item>
     </style>
 
+    <style name="viewParent.headerText">
+        <item name="android:textColor">@color/contentTextColor</item>
+        <item name="android:textSize">@dimen/headerTextSize</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="viewParent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
     <style name="TextAppearance.Widget.Event.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
     <style name="ToolBarStyle" parent="ToolBarStyle.Base">
-    <item name="titleTextAppearance">@style/TextAppearance.Widget.Event.Toolbar.Title</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.Event.Toolbar.Title</item>
     </style>
 
     <style name="ToolBarStyle.Base" parent="Widget.AppCompat.Toolbar" />
 
+    <style name="miniTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/miniTitle</item>
+    </style>
 </resources>
