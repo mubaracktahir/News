@@ -1,0 +1,135 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs"
+apply plugin: "kotlin-kapt"
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        applicationId "com.mubaracktahir.news"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        //android.defaultConfig.javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+    dataBinding {
+        enabled = true
+    }
+    /*compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }*/
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+
+    //testing
+    implementation rootProject.ext.junitTestExt
+    implementation rootProject.ext.junit
+    implementation rootProject.ext.espressoCore
+
+    /* implementation rootProject.ext.androidxTestRunner
+    implementation rootProject.ext.androidxTestRules
+    implementation rootProject.ext.truth
+    implementation rootProject.ext.truthExt
+    implementation rootProject.ext.mockK
+    implementation rootProject.ext.coreTesting
+    implementation rootProject.ext.robolectric*/
+    //material
+    implementation rootProject.ext.supportv4
+    implementation rootProject.ext.appCompat
+    implementation rootProject.ext.materialDesign
+    implementation rootProject.ext.recyclerView
+    implementation rootProject.ext.cardView
+    implementation rootProject.ext.coreKtx
+
+
+    //fuel library
+    implementation rootProject.ext.fuel
+    implementation rootProject.ext.fuel_android
+    implementation rootProject.ext.fuel_gson
+
+    //retrofit
+    implementation rootProject.ext.retrofit
+    implementation rootProject.ext.gson_converter
+    implementation rootProject.ext.kotlin_coroutine_adapter
+    //implementation rootProject.ext.moshiConverter
+
+    //okHttp
+    implementation rootProject.ext.okHttp
+
+    //navigation
+    implementation rootProject.ext.navigationFragmentKtx
+    implementation rootProject.ext.navigationUIKtx
+
+    //room
+    def room_version = "2.2.5"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation rootProject.ext.roomRuntime
+
+
+    //room
+    //implementation rootProject.ext.roomRuntime
+    /* implementation rootProject.ext.roomCompiler*/
+    //room
+    implementation rootProject.ext.lifecycleExt
+    //implementation rootProject.ext.lifecycleAnnotation
+    implementation rootProject.ext.liveDataKtx
+    implementation rootProject.ext.lifecycleViewModelKtx
+
+    //log
+    implementation rootProject.ext.timber
+
+    //gson
+    implementation rootProject.ext.gson
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation rootProject.ext.viewPager2
+
+    implementation rootProject.ext.koddineInjection
+    implementation rootProject.ext.koddineInjectionFramework
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
+    //dagger
+    implementation rootProject.ext.dagger
+    implementation rootProject.ext.daggerSupport
+    kapt rootProject.ext.daggerApt
+    kapt rootProject.ext.daggerAnnotation
+
+    //rxJava
+
+    implementation rootProject.ext.rxJava
+    implementation rootProject.ext.rxAndroid
+    implementation rootProject.ext.rxKotlin
+    implementation rootProject.ext.rxAnimations
+    //implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
+
+
+}
