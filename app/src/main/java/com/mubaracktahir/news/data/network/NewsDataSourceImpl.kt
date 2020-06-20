@@ -6,6 +6,7 @@ import com.mubaracktahir.news.data.db.entity.NewsObject
 import com.mubaracktahir.news.utils.exceptions.NoInternetEception
 import timber.log.Timber
 import java.io.IOException
+import java.net.SocketTimeoutException
 
 class NewsDataSourceImpl(val newsApiService: NewsApiService) : NewsDataSource {
     private val _retrievedNewsObject =  MutableLiveData<NewsObject>()
@@ -20,11 +21,14 @@ class NewsDataSourceImpl(val newsApiService: NewsApiService) : NewsDataSource {
 
         try {
             val fetchCurrentNews = newsApiService
-                .getNews(source, sortBy)
+                .getNews(source)
                 .await()
             _retrievedNewsObject.postValue(fetchCurrentNews)
         } catch (e: NoInternetEception) {
             Timber.i("No,Internet Connection")
+        }
+        catch ( d : SocketTimeoutException){
+            Timber.d("Weak or no internet connection")
         }
 
     }

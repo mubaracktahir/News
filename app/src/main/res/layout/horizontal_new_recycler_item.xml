@@ -7,12 +7,16 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/title"
         style="@style/viewParent.headerText"
         android:textSize="16sp"
+        android:maxLines="1"
+        android:ellipsize="end"
         tools:text="Google’s new free app teaches kids  \nto read by listening to them" />
 
-    <ImageView
-        android:layout_width="match_parent"
+    <com.mubaracktahir.news.utils.EqualImageView
+        android:id="@+id/article_image"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:adjustViewBounds="true"
@@ -23,6 +27,7 @@
         style="@style/miniTitle"
         android:layout_marginTop="5dp"
         android:maxLines="2"
+        android:id="@+id/miniText"
         android:textColor="@color/featuredNewsContentColor"
         tools:text="Google has just ripped the beta label off Rivet, its \nfree mobile app designed to help young children learn to read. " />
 </LinearLayout>

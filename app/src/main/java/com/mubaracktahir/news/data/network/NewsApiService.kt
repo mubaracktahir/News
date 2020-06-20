@@ -19,6 +19,8 @@ import retrofit2.http.Query
  * Mubby inc
  * mubarack.tahirr@gmail.com
  */
+
+//https://newsapi.org/v2/top-headlines?q=trump&apiKey=46c3fe92f4ad4d9d957161671d120429
 interface NewsApiService {
     @GET("articles")
     fun getNews(

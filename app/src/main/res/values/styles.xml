@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/splashFragmentBackground</item>
         <item name="colorPrimaryDark">@color/splashFragmentBackground</item>
         <item name="colorAccent">@color/splashFragmentBackground</item>
+        <item name="android:colorEdgeEffect">#00FFFFFF</item>
     </style>
 
     <style name="viewParent.headerText">

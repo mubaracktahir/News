@@ -7,8 +7,10 @@
     <color name="chipItemBackgroundColor">#f1f3f4</color>
     <color name="chipTextColor">#5D50FE</color>
 
+    <color name="imageBorderColor">#E01E7A</color>
 
- <color name="imageBorderColor">#E01E7A</color>
+
+    <color name="hj">#00FFFFFF</color>
 
     <!--light mode color-->
     <color name="colorPrimary">#FCFCFC</color>
