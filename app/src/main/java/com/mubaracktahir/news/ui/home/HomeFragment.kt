@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.mubaracktahir.news.R
 import com.mubaracktahir.news.core.adapters.HorizontalAdapter
 import com.mubaracktahir.news.core.adapters.NewsAdapter
@@ -95,9 +96,8 @@ class HomeFragment : BaseFragment(), KodeinAware {
     fun setUpTopNewsAdapter(it: NewsObject) {
         adapter2 = HorizontalAdapter(R.layout.horizontal_new_recycler_item, it.articles)
         binding.horizontalNewsRecycler.adapter = adapter2
-        binding.horizontalNewsRecycler.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.horizontalNewsRecycler.setHasFixedSize(true)
+        binding.horizontalNewsRecycler.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
     }
 
     override fun onResume() {

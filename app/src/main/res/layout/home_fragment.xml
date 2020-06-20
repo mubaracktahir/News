@@ -54,7 +54,7 @@
                     android:text="Top News  "
                     android:textColor="@color/chipTextColor" />
 
-                <androidx.recyclerview.widget.RecyclerView
+                <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/horizontal_news_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="295dp"
@@ -62,7 +62,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:listitem="@layout/horizontal_new_recycler_item" />
+                   />
 
                 <TextView
                     android:id="@+id/headlines"

@@ -6,5 +6,6 @@
 
 
     <string name="position" translatable="false">position</string>
+    <string name="pinstar_app_name">Pinstar</string>
 
 </resources>

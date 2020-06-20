@@ -29,8 +29,7 @@ class SplashFragment : Fragment() {
         logop.startAnimation(animation)
         Handler().postDelayed({
             Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_homeFragment)
-
-        }, 3000)
+        }, 2500)
         return view
     }
 
