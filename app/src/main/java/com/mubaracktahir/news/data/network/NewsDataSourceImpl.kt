@@ -6,6 +6,7 @@ import com.mubaracktahir.news.data.db.entity.NewsObject
 import com.mubaracktahir.news.utils.exceptions.NoInternetEception
 import timber.log.Timber
 import java.io.IOException
+import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 class NewsDataSourceImpl(val newsApiService: NewsApiService) : NewsDataSource {
@@ -30,6 +31,8 @@ class NewsDataSourceImpl(val newsApiService: NewsApiService) : NewsDataSource {
         catch ( d : SocketTimeoutException){
             Timber.d("Weak or no internet connection")
         }
-
+        catch ( d : ConnectException){
+            Timber.d("Weak or no internet connection")
+        }
     }
 }

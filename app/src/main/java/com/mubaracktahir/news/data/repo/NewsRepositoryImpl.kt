@@ -55,7 +55,7 @@ class NewsRepositoryImpl(
     }
 
     private suspend fun fetchCurrentNews() {
-        newsDataSource.fetchCurrentNews("bbc-news", "top")
+        newsDataSource.fetchCurrentNews("bbc-news","top")
 
     }
 

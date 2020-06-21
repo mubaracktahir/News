@@ -4,36 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:orientation="vertical"
         android:id="@+id/rootView"
-        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical"
         tools:context=".ui.main.MainActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_marginTop="10dp"
-            style="@style/ToolBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
-            android:gravity="center">
 
-            <TextView
-                android:id="@+id/textViewToolbarTitle"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/ToolBarStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:padding="10dp"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/white"
                 android:gravity="center"
-                android:textSize="19sp"
-                android:textColor="@android:color/darker_gray"
-                android:background="@drawable/search_area_backgrd"
-                android:text="Search Latest News"
-                android:textStyle="bold" />
+                app:contentScrim="@color/splashFragmentBackground"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                app:toolbarId="@id/toolbar">
 
-        </androidx.appcompat.widget.Toolbar>
+                <TextView
+                    android:id="@+id/textViewToolbarTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/search_area_backgrd"
+                    android:padding="10dp"
+                    android:text="Search Latest News"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+            </androidx.appcompat.widget.Toolbar>
 
         <fragment
             android:id="@+id/nav_host_fragment_container"
@@ -45,14 +48,13 @@
             app:navGraph="@navigation/mobile_navigation" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/btn_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_nav"
-            app:itemBackground="@null"
             android:layout_alignParentBottom="true"
             android:animateLayoutChanges="false"
-            app:menu="@menu/bottom_navication_menu"
-            />
+            app:itemBackground="@null"
+            app:menu="@menu/bottom_navication_menu" />
     </LinearLayout>
 
 

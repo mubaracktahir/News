@@ -1,10 +1,17 @@
 package com.mubaracktahir.news.ui.home
 
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +23,7 @@ import com.mubaracktahir.news.core.adapters.TrendingAdapter
 import com.mubaracktahir.news.data.db.entity.Article
 import com.mubaracktahir.news.data.db.entity.NewsObject
 import com.mubaracktahir.news.databinding.HomeFragmentBinding
+import com.mubaracktahir.news.ui.MainActivity
 import com.mubaracktahir.news.ui.base.BaseFragment
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -40,6 +48,7 @@ class HomeFragment : BaseFragment(), KodeinAware {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
 
         buildUI()
+
         Timber.d("onCreateView")
 
         return binding.root
@@ -77,13 +86,19 @@ class HomeFragment : BaseFragment(), KodeinAware {
         binding.newsRecycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.newsRecycler.setHasFixedSize(true)
+        adapter3.setOnclickListener(object : NewsAdapter.OnclickListener {
+            override fun onItemClicked(note: Article) {
+                loadUrl(note)
+            }
+        })
     }
 
     fun setUpTrendingAdapter(it: NewsObject) {
         adapter = TrendingAdapter(R.layout.story_recycler_item, it.articles)
         adapter.setOnclickListener(object : TrendingAdapter.OnclickListener {
             override fun onItemClicked(note: Article) {
-                Toast.makeText(context, "${note.title}", Toast.LENGTH_LONG).show()
+                loadUrl(note)
+
             }
         })
         binding.storyRecycler.adapter = adapter
@@ -97,7 +112,12 @@ class HomeFragment : BaseFragment(), KodeinAware {
         adapter2 = HorizontalAdapter(R.layout.horizontal_new_recycler_item, it.articles)
         binding.horizontalNewsRecycler.adapter = adapter2
         binding.horizontalNewsRecycler.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        adapter2.setOnclickListener(object : HorizontalAdapter.OnclickListener {
+            override fun onItemClicked(note: Article) {
+                loadUrl(note)
 
+            }
+        })
     }
 
     override fun onResume() {
@@ -120,5 +140,30 @@ class HomeFragment : BaseFragment(), KodeinAware {
         Timber.d("onStop")
     }
 
+    fun loadUrl(article: Article) {
+        val url = article.url
+        var customTabs = CustomTabsIntent.Builder()
+        customTabs.setToolbarColor(Color.parseColor("#C70000"))
+        customTabs.setExitAnimations(this.context!!, 0, 0)
+        customTabs.setStartAnimations(this.context!!, 0, 0)
+        var intent = customTabs.build()
+        intent.launchUrl(this.context, Uri.parse(url))
+
+    }
+
+    private fun createPendingIntent(actionId: Int): PendingIntent {
+        var actionIntent = Intent(activity?.applicationContext, BroadCastReceiver::class.java)
+        actionIntent.putExtra("", actionId)
+        return PendingIntent.getBroadcast(activity?.applicationContext, actionId, actionIntent, 0)
+
+    }
+
+    inner class BroadCastReceiver : BroadcastReceiver() {
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            Toast.makeText(context, "This was called", Toast.LENGTH_LONG).show()
+
+        }
+
+    }
 
 }

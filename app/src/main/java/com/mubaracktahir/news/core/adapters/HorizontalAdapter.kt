@@ -50,7 +50,6 @@ class HorizontalAdapter(val layout: Int, val articles: List<Article>) :
             itemView.title.text = article.title
             itemView.miniText.text = article.description
         }
-
         init {
             itemView.setOnClickListener {
                 val position = adapterPosition

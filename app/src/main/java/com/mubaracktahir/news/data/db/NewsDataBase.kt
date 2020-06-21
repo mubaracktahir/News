@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.mubaracktahir.news.data.db.daos.NewsDao
 import com.mubaracktahir.news.data.db.entity.NewsObject
+import com.mubaracktahir.news.data.db.entity.NewsObject2
 import com.mubaracktahir.news.data.db.typeconverters.Converter
 import dagger.Provides
 import javax.inject.Singleton

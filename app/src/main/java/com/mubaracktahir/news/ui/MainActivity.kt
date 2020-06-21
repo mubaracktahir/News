@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-            statusBarColor = Color.TRANSPARENT
+            statusBarColor = Color.parseColor("#C70000")
         }
     }
 

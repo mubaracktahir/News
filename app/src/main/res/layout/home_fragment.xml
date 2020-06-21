@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Trending"
+                    android:text="Trending Topics"
                     android:textColor="@color/splashFragmentBackground" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -58,6 +58,7 @@
                     android:id="@+id/horizontal_news_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="295dp"
+                    android:background="@null"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

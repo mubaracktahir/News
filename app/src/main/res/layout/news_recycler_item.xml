@@ -16,7 +16,7 @@
         style="@style/viewParent.headerText"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/newsThumbnailImageView"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:maxLines="2"
         android:ellipsize="end"
         android:text="Back to beige: decoding this \nseason’s most unlikely, of the "/>
@@ -28,8 +28,8 @@
         android:textColor="@color/featuredNewsContentColor"
         android:layout_toRightOf="@id/newsThumbnailImageView"
         android:layout_below="@id/newsTitleTextView"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
+        android:textSize="14sp"
         android:maxLines="2"
         android:ellipsize="end"
         android:text="As far as trends go, you’d be forgiven \nfor assuming that beige equals boring. "/>
@@ -37,13 +37,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="1 hrs ago"
+        android:text="1 hrs ago"
         android:layout_alignParentBottom="true"
         android:textColor="@color/splashFragmentBackground"
         android:textSize="11sp"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/newsThumbnailImageView"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

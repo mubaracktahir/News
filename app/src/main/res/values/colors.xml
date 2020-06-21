@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <!-- <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>-->
     <color name ="splashFragmentBackground">#C70000</color>
     <color name="chipItemBackgroundColor">#f1f3f4</color>
     <color name="chipTextColor">#5D50FE</color>
 
-    <color name="imageBorderColor">#E01E7A</color>
-
-
-    <color name="hj">#00FFFFFF</color>
+ <color name="imageBorderColor">#E01E7A</color>
 
     <!--light mode color-->
     <color name="colorPrimary">#FCFCFC</color>
@@ -25,11 +19,4 @@
     <color name="bottomNavigationBackground">#F7F7F7</color>
     <color name="miniTitle">#2A2E43</color>
     <color name="featuredNewsContentColor">#8E909A</color>
-
-    <!--Dark mode color-->
-    <!--<color name="contentBodyColor">#2A2E43</color>
-    <color name="contentTextColor">#fff</color>
-    <color name="bottomNavigationBackground">#2A2E43</color>
-    <color name="featuredNewsContentColor">#fff</color>
-    <color name="miniTitle">#fff</color>-->
 </resources>
