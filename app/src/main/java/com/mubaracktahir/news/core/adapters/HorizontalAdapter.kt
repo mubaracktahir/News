@@ -10,7 +10,6 @@ import com.mubaracktahir.news.data.db.entity.Article
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.horizontal_new_recycler_item.view.*
 
-
 /**
  * Created by Mubarak Tahir on 6/19/2020.
  * Mubby inc
@@ -37,15 +36,16 @@ class HorizontalAdapter(val layout: Int, val articles: List<Article>) :
     }
 
     interface OnclickListener {
-        fun onItemClicked(note: Article)
+        fun onItemClicked(note: Article,position: Int)
     }
 
     inner class MyViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         fun bindView(article: Article) {
+
             Picasso.get()
                 .load(article.urlToImage)
-                .placeholder(R.drawable.image)
+                .placeholder(R.drawable.background)
                 .into(itemView.article_image)
             itemView.title.text = article.title
             itemView.miniText.text = article.description
@@ -54,7 +54,7 @@ class HorizontalAdapter(val layout: Int, val articles: List<Article>) :
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (listener != null) {
-                    listener!!.onItemClicked(articles.get(position))
+                    listener!!.onItemClicked(articles.get(position),position)
                 }
             }
         }

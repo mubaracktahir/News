@@ -3,12 +3,16 @@
     android:background="@color/colorPrimary">
     <item
         android:id="@+id/homeFragment"
-        android:title=""
-        android:icon="@drawable/news_field_outline_png" />
-
+        android:icon="@drawable/news_field_outline_png"
+        android:title="News" />
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/search"
+        android:title="search"/>
     <item
         android:id="@+id/fragmentFavorite"
-        android:title=""
-        android:icon="@drawable/heart" />
+        android:icon="@drawable/heart"
+        android:title="Favorite" />
+
 
 </menu>

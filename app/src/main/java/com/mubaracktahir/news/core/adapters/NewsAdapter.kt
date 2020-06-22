@@ -1,5 +1,6 @@
 package com.mubaracktahir.news.core.adapters
 
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +44,7 @@ class NewsAdapter(val layout: Int, val articles : List<Article>) : RecyclerView.
     }
 
     interface OnclickListener {
-        fun onItemClicked(note: Article)
+        fun onItemClicked(note: Article,position: Int)
     }
 
     inner class MyViewHolder(itemView: View) :
@@ -51,22 +52,25 @@ class NewsAdapter(val layout: Int, val articles : List<Article>) : RecyclerView.
         fun bindView(article: Article) {
             Picasso.get()
                 .load(article.urlToImage)
-                .placeholder(R.drawable.image)
+                .placeholder(R.drawable.background)
                 .into(itemView.newsThumbnailImageView)
             itemView.newsTitleTextView.text = article.title
             itemView.newsDetailTextView.text = article.description
+            itemView.date.setText("BBC NEWS ")
+            itemView.date.append( Html.fromHtml("&#8226"))
+            itemView.date.append(" 1 hour ago")
+
         }
 
         init {
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (listener != null) {
-                    listener!!.onItemClicked(articles.get(position))
+                    listener!!.onItemClicked(articles.get(position),position)
                 }
             }
         }
     }
-
     companion object {
         private val diffCallback: DiffUtil.ItemCallback<Article> =
             object : DiffUtil.ItemCallback<Article>() {

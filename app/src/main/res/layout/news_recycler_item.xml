@@ -1,55 +1,79 @@
-<RelativeLayout android:layout_width="match_parent"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginTop="15dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_margin="5dp"
+    app:cardCornerRadius="10dp">
 
-    <ImageView
-        android:id="@+id/newsThumbnailImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/image"/>
-
-    <TextView
-        android:id="@+id/newsTitleTextView"
-        style="@style/viewParent.headerText"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/newsThumbnailImageView"
-        android:textSize="14sp"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:text="Back to beige: decoding this \nseason’s most unlikely, of the "/>
-
-    <TextView
-        android:id="@+id/newsDetailTextView"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/featuredNewsContentColor"
-        android:layout_toRightOf="@id/newsThumbnailImageView"
-        android:layout_below="@id/newsTitleTextView"
-        android:layout_marginLeft="5dp"
-        android:textSize="14sp"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:text="As far as trends go, you’d be forgiven \nfor assuming that beige equals boring. "/>
+        android:layout_margin="20dp"
+        android:layout_marginTop="15dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1 hrs ago"
-        android:layout_alignParentBottom="true"
-        android:textColor="@color/splashFragmentBackground"
-        android:textSize="11sp"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/newsThumbnailImageView"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Read More >"
-        android:textStyle="bold"
-        android:textSize="11sp"
-        android:textColor="#019AE8"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
-</RelativeLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            app:cardCornerRadius="7dp">
+
+            <ImageView
+                android:id="@+id/newsThumbnailImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/background" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/newsTitleTextView"
+            style="@style/viewParent.headerText"
+            android:layout_marginRight="5dp"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:maxLines="3"
+            android:lineHeight="25dp"
+            android:textStyle="normal"
+            android:layout_toStartOf="@id/cardview"
+            android:layout_alignParentStart="true"
+            android:text="Back to beige: decoding this \nseason’s most unlikely, of the "
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/newsDetailTextView"
+            style="@style/viewParent.headerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/newsTitleTextView"
+            android:layout_marginLeft="5dp"
+            android:layout_toStartOf="@id/cardview"
+            android:layout_alignParentStart="true"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:lineHeight="23dp"
+
+            android:layout_marginRight="5dp"
+            android:maxLines="2"
+            android:text="As far as trends go, you’d be forgiven \nfor assuming that beige equals boring. "
+            android:textColor="@color/featuredNewsContentColor"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/viewParent.headerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/newsDetailTextView"
+            android:layout_toRightOf="@id/cardview"
+            android:text="1 hour(s) ago"
+            android:textColor="@color/featuredNewsContentColor"
+            android:textSize="11sp" />
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

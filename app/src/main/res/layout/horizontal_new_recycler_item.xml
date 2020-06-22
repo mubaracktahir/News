@@ -1,36 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@null"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_margin="3dp"
+    app:cardCornerRadius="10dp"
+    android:outlineSpotShadowColor="@null"
+    android:outlineAmbientShadowColor="@null"
+    >
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/viewParent.headerText"
-        android:textSize="16sp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        tools:text="Google’s new free app teaches kids  \nto read by listening to them" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <com.mubaracktahir.news.utils.EqualImageView
-        android:id="@+id/article_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:adjustViewBounds="true"
-        android:cropToPadding="true"
-        android:background="@drawable/image_background"
-        tools:src="@drawable/image" />
+        <ImageView
+            android:id="@+id/article_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/background" />
 
-    <TextView
-        style="@style/miniTitle"
-        android:layout_marginTop="5dp"
-        android:maxLines="2"
-        android:id="@+id/miniText"
-        android:textColor="@color/featuredNewsContentColor"
-        tools:text="Google has just ripped the beta label off Rivet, its \nfree mobile app designed to help young children learn to read. " />
-</LinearLayout>
+        <TextView
+            android:id="@+id/title"
+            style="@style/viewParent.headerText"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textStyle="normal"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif"
+            tools:text="Google’s new free app teaches kids  \nto read by listening to them" />
+
+        <TextView
+            android:id="@+id/miniText"
+            style="@style/miniTitle"
+            android:maxLines="2"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/featuredNewsContentColor"
+            android:lineHeight="23dp"
+            tools:text="Google has just ripped the beta label off Rivet, its \nfree mobile app designed to help young children learn to read. " />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>

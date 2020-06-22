@@ -35,7 +35,7 @@ class TrendingAdapter(val layout: Int ,val articles : List<Article>) : RecyclerV
     }
 
     interface OnclickListener {
-        fun onItemClicked(note: Article)
+        fun onItemClicked(note: Article, position: Int)
     }
 
     inner class MyViewHolder(itemView: View) :
@@ -43,7 +43,7 @@ class TrendingAdapter(val layout: Int ,val articles : List<Article>) : RecyclerV
         fun bindView(article: Article) {
             Picasso.get()
                 .load(article.urlToImage)
-                .placeholder(R.drawable.image)
+                .placeholder(R.drawable.background)
                 .into(itemView.profile_image)
         }
 
@@ -51,7 +51,7 @@ class TrendingAdapter(val layout: Int ,val articles : List<Article>) : RecyclerV
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (listener != null) {
-                    listener!!.onItemClicked(articles.get(position))
+                    listener!!.onItemClicked(articles.get(position),position)
                 }
             }
         }

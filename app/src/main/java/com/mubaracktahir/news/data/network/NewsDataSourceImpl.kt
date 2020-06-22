@@ -8,6 +8,7 @@ import timber.log.Timber
 import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
+import javax.net.ssl.SSLHandshakeException
 
 class NewsDataSourceImpl(val newsApiService: NewsApiService) : NewsDataSource {
     private val _retrievedNewsObject =  MutableLiveData<NewsObject>()
@@ -30,6 +31,8 @@ class NewsDataSourceImpl(val newsApiService: NewsApiService) : NewsDataSource {
         }
         catch ( d : SocketTimeoutException){
             Timber.d("Weak or no internet connection")
+        }catch (i : SSLHandshakeException){
+
         }
         catch ( d : ConnectException){
             Timber.d("Weak or no internet connection")

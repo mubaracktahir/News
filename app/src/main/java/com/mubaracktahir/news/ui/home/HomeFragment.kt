@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -40,8 +41,6 @@ class HomeFragment : BaseFragment(), KodeinAware {
     lateinit var adapter: TrendingAdapter
     lateinit var adapter2: HorizontalAdapter
     lateinit var adapter3: NewsAdapter
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -87,8 +86,8 @@ class HomeFragment : BaseFragment(), KodeinAware {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.newsRecycler.setHasFixedSize(true)
         adapter3.setOnclickListener(object : NewsAdapter.OnclickListener {
-            override fun onItemClicked(note: Article) {
-                loadUrl(note)
+            override fun onItemClicked(note: Article, position: Int) {
+                loadUrl(note, position)
             }
         })
     }
@@ -96,8 +95,8 @@ class HomeFragment : BaseFragment(), KodeinAware {
     fun setUpTrendingAdapter(it: NewsObject) {
         adapter = TrendingAdapter(R.layout.story_recycler_item, it.articles)
         adapter.setOnclickListener(object : TrendingAdapter.OnclickListener {
-            override fun onItemClicked(note: Article) {
-                loadUrl(note)
+            override fun onItemClicked(note: Article, position: Int) {
+                loadUrl(note, position)
 
             }
         })
@@ -113,8 +112,8 @@ class HomeFragment : BaseFragment(), KodeinAware {
         binding.horizontalNewsRecycler.adapter = adapter2
         binding.horizontalNewsRecycler.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         adapter2.setOnclickListener(object : HorizontalAdapter.OnclickListener {
-            override fun onItemClicked(note: Article) {
-                loadUrl(note)
+            override fun onItemClicked(note: Article, position: Int) {
+                loadUrl(note, position)
 
             }
         })
@@ -140,30 +139,118 @@ class HomeFragment : BaseFragment(), KodeinAware {
         Timber.d("onStop")
     }
 
-    fun loadUrl(article: Article) {
+    fun loadUrl(article: Article, position: Int) {
+
         val url = article.url
         var customTabs = CustomTabsIntent.Builder()
         customTabs.setToolbarColor(Color.parseColor("#C70000"))
         customTabs.setExitAnimations(this.context!!, 0, 0)
         customTabs.setStartAnimations(this.context!!, 0, 0)
+        //PUT AS EXTRA TO OPEN FRAGMENT
+        customTabs.addMenuItem(
+            " Back To News Field", PendingIntent.getActivity(
+                this.context, 0, Intent(
+                    this.context,
+                    MainActivity::class.java
+                ), 0
+            )
+        )
+        var intent2 = Intent(this.context, MainActivity::class.java)
+        customTabs.addMenuItem(
+            "See Bookmarked news", PendingIntent.getActivity(
+                this.context, 0, intent2, 0
+            )
+        )
+
+
+        // this is actually a bad idea
+        //temp from line 162 - 179
+        var heart = BitmapFactory.decodeResource(resources, R.drawable.heart)
+        var shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.setType("text/plain")
+        shareIntent.putExtra(
+            Intent.EXTRA_SUBJECT,
+            "Sent from NewsApp download News app, its available on play store"
+        )
+        shareIntent.putExtra(Intent.EXTRA_TEXT, article.url)
+        var pendingIntent = PendingIntent.getActivity(
+            this.context,
+            100,
+            shareIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        customTabs.setActionButton(
+            heart,
+            "heart",
+            createPendingIntent(BroadCastReceiver.ACTION_ACTION_BUTTON, position),
+            true
+        )
+
+        // shares the HTML version of the open URL through
+        customTabs.addDefaultShareMenuItem()
         var intent = customTabs.build()
         intent.launchUrl(this.context, Uri.parse(url))
 
     }
 
-    private fun createPendingIntent(actionId: Int): PendingIntent {
-        var actionIntent = Intent(activity?.applicationContext, BroadCastReceiver::class.java)
-        actionIntent.putExtra("", actionId)
-        return PendingIntent.getBroadcast(activity?.applicationContext, actionId, actionIntent, 0)
+    private fun createPendingIntent(actionId: Int, articlePosition: Int): PendingIntent {
+        var actionIntent = Intent(this.context, BroadCastReceiver::class.java)
+        actionIntent.putExtra(BroadCastReceiver.KEY_ACTION_SOURCE, actionId)
+        actionIntent.putExtra(BroadCastReceiver.ARTICLE, articlePosition)
+        return PendingIntent.getBroadcast(
+            activity?.applicationContext,
+            actionId,
+            actionIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
     }
 
-    inner class BroadCastReceiver : BroadcastReceiver() {
-        override fun onReceive(p0: Context?, p1: Intent?) {
-            Toast.makeText(context, "This was called", Toast.LENGTH_LONG).show()
+    lateinit var article: Article
+
+    class BroadCastReceiver : BroadcastReceiver() {
+
+        companion object {
+            val KEY_ACTION_SOURCE = "com.mubaracktahir.news.ui.home"
+            val ACTION_ACTION_BUTTON = 1
+            val ACTION_MENU_ITEM = 2
+            val ACTION_TOOLBAR = 3
+            val ARTICLE = "4"
+        }
+
+        override fun onReceive(context: Context?, p1: Intent?) {
+            val ul = p1?.dataString
+            var articlePosition = p1?.getIntExtra("4", -1)
+            if (p1 != null)
+                takeAction(
+                    context!!,
+                    p1.getIntExtra(KEY_ACTION_SOURCE, -1),
+                    " article position: $articlePosition ${ul!!}"
+                )
+        }
+
+        private fun takeAction(context: Context, actionId: Int, url: String) {
+            when (actionId) {
+                ACTION_ACTION_BUTTON -> bookMarkArticle(context)
+                ACTION_MENU_ITEM -> "ACTION_MENU_ITEM"
+                ACTION_TOOLBAR -> "ACTION_TOOLBAR"
+                else -> "a ghost button has been triggered $url"
+            }
 
         }
 
-    }
+        private fun bookMarkArticle(context: Context) {
+            Toast.makeText(
+                context,
+                " bookMarked Successfully!!",
+                Toast.LENGTH_LONG
+            ).show()
+        }
 
+        private fun callMeeMaybe(callback: (name: Int) -> Unit) {
+
+
+        }
+    }
 }
+

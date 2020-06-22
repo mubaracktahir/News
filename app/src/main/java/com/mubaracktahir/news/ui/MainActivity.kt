@@ -19,11 +19,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = DataBindingUtil.setContentView(
             this@MainActivity,
             R.layout.activity_main
         )
-        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         setTransparentStatusBar()
         setupNavigation()
@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         window.apply {
             clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
             statusBarColor = Color.parseColor("#C70000")
         }
     }
@@ -42,21 +41,15 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavigation() {
 
         navController = findNavController(R.id.nav_host_fragment_container)
-        binding.toolbar.navigationIcon?.setTint(Color.parseColor("#130e51"))
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.splashFragment -> {
-                    binding.toolbar.visibility = View.GONE
                     binding.btnNav.visibility = View.GONE
                 }
                 R.id.homeFragment -> {
-                    binding.toolbar.visibility = View.VISIBLE
                     binding.btnNav.visibility = View.VISIBLE
-
-
                 }
                 else -> {
-                    binding.toolbar.visibility = View.VISIBLE
                     binding.btnNav.visibility = View.VISIBLE
 
                 }
