@@ -1,69 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@null"
-    tools:context=".ui.search.SearchFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:id="@+id/rootView"
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:orientation="vertical"
-        tools:context=".ui.main.MainActivity">
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/rootView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:orientation="vertical"
+            tools:context=".ui.search.SearchFragment">
 
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                style="@style/ToolBarStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:gravity="center"
-                app:contentScrim="@color/splashFragmentBackground"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-                app:toolbarId="@id/toolbar">
+                android:orientation="vertical"
+                tools:context=".ui.main.MainActivity">
 
-                <LinearLayout
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    style="@style/ToolBarStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@android:color/white"
                     android:gravity="center"
-                    android:background="@drawable/search_area_backgrd"
-                    android:orientation="horizontal">
+                    app:contentScrim="@color/splashFragmentBackground"
+                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                    app:toolbarId="@id/toolbar">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:backgroundTint="@android:color/darker_gray"
-                        android:src="@drawable/search" />
-
-                    <EditText
-                        android:id="@+id/textViewToolbarTitle"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="24dp"
-                        android:background="@null"
-                        android:hint="Search Latest News"
-                        android:padding="10dp"
-                        android:inputType="textWebEditText"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
-    </LinearLayout>
+                        android:background="@drawable/search_area_backgrd"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textStyle="normal"
-        android:fontFamily="sans-serif"
-        android:textColor="@color/bottomNavigationTintColor"
-        android:text="Search from more than 50,000 News\narticles across the globe " />
 
-</FrameLayout>
+                        <EditText
+                            android:id="@+id/textViewToolbarTitle"
+                            android:layout_width="300dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp"
+                            android:background="@null"
+                            android:hint="Search Latest News"
+                            android:inputType="textWebEditText"
+                            android:padding="10dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+                        <ImageView
+                            android:id="@+id/ser"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="15dp"
+                            android:backgroundTint="@android:color/darker_gray"
+                            android:src="@drawable/search" />
+
+                    </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/news_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="Search from more than 50,000 News\narticles across the globe "
+                android:textColor="@color/bottomNavigationTintColor"
+                android:textStyle="normal" />
+        </LinearLayout>
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -8,9 +8,12 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Vibrator
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.databinding.DataBindingUtil
@@ -18,10 +21,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.mubaracktahir.news.R
+import com.mubaracktahir.news.core.adapters.Category
 import com.mubaracktahir.news.core.adapters.HorizontalAdapter
 import com.mubaracktahir.news.core.adapters.NewsAdapter
 import com.mubaracktahir.news.core.adapters.TrendingAdapter
-import com.mubaracktahir.news.data.db.entity.Article
 import com.mubaracktahir.news.data.db.entity.NewsObject
 import com.mubaracktahir.news.databinding.HomeFragmentBinding
 import com.mubaracktahir.news.ui.MainActivity
@@ -31,7 +34,8 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 import timber.log.Timber
-
+import com.mubaracktahir.news.core.adapters.NewsAdapter.ArticleListener
+import com.mubaracktahir.news.data.db.entity.Article
 
 class HomeFragment : BaseFragment(), KodeinAware {
     private lateinit var viewModel: HomeViewModel
@@ -45,10 +49,10 @@ class HomeFragment : BaseFragment(), KodeinAware {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
-
         buildUI()
-
         Timber.d("onCreateView")
+        binding.setLifecycleOwner(this@HomeFragment)
+
 
         return binding.root
     }
@@ -58,45 +62,49 @@ class HomeFragment : BaseFragment(), KodeinAware {
         Timber.d("onActivityCreated")
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
+        binding.viewModel = viewModel
     }
 
     private fun buildUI() = launch {
-        val latestNews = viewModel.newsObjet.await()
+        val latestNews = viewModel.newsObject.await()
         latestNews.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it == null) return@Observer
             binding.progressCircular.visibility = View.GONE
-
+            Timber.d(it.articles.toString())
             setUpHeadLinesAdapter(it)
             setUpTopNewsAdapter(it)
             setUpTrendingAdapter(it)
-
-
             //enable textViews
-            binding.headlines.visibility = View.VISIBLE
-            binding.topnews.visibility = View.VISIBLE
-            binding.trending.visibility = View.VISIBLE
+            binding.view.visibility = View.VISIBLE
             Toast.makeText(context, "Unable to refresh field", Toast.LENGTH_LONG).show()
         })
     }
 
     fun setUpHeadLinesAdapter(it: NewsObject) {
-        adapter3 = NewsAdapter(R.layout.news_recycler_item, it.articles)
+        adapter3 = NewsAdapter(ArticleListener{
+            article, position ->
+            var b = context?.applicationContext?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            var pp = arrayOf(0,1000,0)
+            b.vibrate(30)
+            loadUrl(article,position)
+        })
+        adapter3.articles = it.articles
         binding.newsRecycler.adapter = adapter3
         binding.newsRecycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.newsRecycler.setHasFixedSize(true)
         adapter3.setOnclickListener(object : NewsAdapter.OnclickListener {
             override fun onItemClicked(note: Article, position: Int) {
-                loadUrl(note, position)
+
             }
         })
+
     }
 
     fun setUpTrendingAdapter(it: NewsObject) {
-        adapter = TrendingAdapter(R.layout.story_recycler_item, it.articles)
+        adapter = TrendingAdapter(R.layout.story_recycler_item)
         adapter.setOnclickListener(object : TrendingAdapter.OnclickListener {
-            override fun onItemClicked(note: Article, position: Int) {
-                loadUrl(note, position)
+            override fun onItemClicked(category: Category) {
 
             }
         })
@@ -108,35 +116,46 @@ class HomeFragment : BaseFragment(), KodeinAware {
 
 
     fun setUpTopNewsAdapter(it: NewsObject) {
-        adapter2 = HorizontalAdapter(R.layout.horizontal_new_recycler_item, it.articles)
+        adapter2 = HorizontalAdapter()
+        adapter2.articles = it.articles
         binding.horizontalNewsRecycler.adapter = adapter2
         binding.horizontalNewsRecycler.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         adapter2.setOnclickListener(object : HorizontalAdapter.OnclickListener {
             override fun onItemClicked(note: Article, position: Int) {
                 loadUrl(note, position)
-
             }
         })
-    }
 
-    override fun onResume() {
-        super.onResume()
-        Timber.d("onResume")
-    }
+        binding.horizontalNewsRecycler.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    addDot(position, it.articles.size)
 
-    override fun onPause() {
-        super.onPause()
-        Timber.d("onPause")
+                }
+            }
+        )
     }
+    private fun addDot(position: Int, size: Int) {
+        val textViews = arrayOfNulls<TextView>(size)
+        binding.liner.removeAllViews()
+        var i = 0
+        while (i < size) {
+            textViews[i] = TextView(this?.context)
+            textViews[i]?.setText(Html.fromHtml("&#8226;"))
+            textViews[i]?.textSize = 35f
+            textViews[i]?.setTextColor(resources.getColor(android.R.color.darker_gray))
+            textViews[i]?.setOnClickListener {
+                binding.horizontalNewsRecycler.setCurrentItem(i)
+                Toast.makeText(this.context, "ckloo $i", Toast.LENGTH_LONG).show()
+            }
+            binding.liner.addView(textViews[i])
+            i++
 
-    override fun onStart() {
-        super.onStart()
-        Timber.d("onStart")
-    }
+        }
+        if (textViews.size > 0)
+            textViews[position]?.setTextColor(resources.getColor(R.color.splashFragmentBackground))
 
-    override fun onStop() {
-        super.onStop()
-        Timber.d("onStop")
     }
 
     fun loadUrl(article: Article, position: Int) {
@@ -181,7 +200,7 @@ class HomeFragment : BaseFragment(), KodeinAware {
         )
         customTabs.setActionButton(
             heart,
-            "heart",
+            "Bookmark",
             createPendingIntent(BroadCastReceiver.ACTION_ACTION_BUTTON, position),
             true
         )
@@ -245,10 +264,6 @@ class HomeFragment : BaseFragment(), KodeinAware {
                 " bookMarked Successfully!!",
                 Toast.LENGTH_LONG
             ).show()
-        }
-
-        private fun callMeeMaybe(callback: (name: Int) -> Unit) {
-
 
         }
     }

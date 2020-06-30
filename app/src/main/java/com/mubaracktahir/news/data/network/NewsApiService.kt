@@ -1,6 +1,7 @@
 package com.mubaracktahir.news.data.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.mubaracktahir.news.data.db.entity.Article
 import com.mubaracktahir.news.data.db.entity.NewsObject
 import com.mubaracktahir.news.utils.Constants.NewsUrls.API_KEY
 import com.mubaracktahir.news.utils.Constants.NewsUrls.API_KEY_QUERY
@@ -12,6 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.util.*
 
 
 /**
@@ -20,14 +22,30 @@ import retrofit2.http.Query
  * mubarack.tahirr@gmail.com
  */
 
-//https://newsapi.org/v2/top-headlines?q=trump&apiKey=46c3fe92f4ad4d9d957161671d120429
 interface NewsApiService {
-    @GET("articles")
-    fun getNews(
-            @Query("source") source: String,
-            @Query("sortBy") sortBy: String = "top"
+    @GET("top-headlines")
+    fun getGlobalNewsAsync(
+        @Query("sources") source: String
     ): Deferred<NewsObject>
 
+
+    @GET("top-headlines")
+    fun getTopNewsAsync(
+        @Query("country") country: String = Locale.getDefault().toString(),
+        @Query("category") cat: String
+    ): Deferred<NewsObject>
+
+
+    @GET("everything")
+    fun searchNewsAsync(
+        @Query("q") searchQuery: String,
+        @Query("sortBy") sortBy: String = "pubishedAt"
+    ): Deferred<NewsObject>
+
+    @GET("top-headlines")
+    fun getLocaleNewsAsync(
+        @Query("country") country: String
+    ): Deferred<NewsObject>
 
     companion object {
         operator fun invoke(connectivityInterceptor: ConnectivityInterceptor): NewsApiService {

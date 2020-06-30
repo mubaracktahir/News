@@ -18,9 +18,11 @@
             tools:src="@drawable/background" />
 
         <TextView
+            android:id="@+id/trendingTitle"
             style="@style/miniTitle"
-            android:textStyle="normal"
+            android:textStyle="bold"
             android:maxLines="2"
+            android:textSize="12sp"
             android:textColor="@color/miniTitle"
             android:text="Fashion" />
 

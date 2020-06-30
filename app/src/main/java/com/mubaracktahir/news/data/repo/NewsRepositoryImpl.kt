@@ -3,9 +3,9 @@ package com.mubaracktahir.news.data.repo
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.mubaracktahir.news.data.db.daos.NewsDao
 import com.mubaracktahir.news.data.db.entity.NewsObject
-import com.mubaracktahir.news.data.network.NewsDataSource
 import com.mubaracktahir.news.data.network.NewsDataSourceImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -18,8 +18,21 @@ class NewsRepositoryImpl(
     private val newsDataSource: NewsDataSourceImpl
 ) : NewsRepository {
 
+    val _newsObject = MutableLiveData<NewsObject>()
+    val newsObject: LiveData<NewsObject>
+        get() = _newsObject
+
     init {
-        newsDataSource.retrievedNewsObject.observeForever {
+        newsDataSource.retrievedLocaleNews.observeForever {
+
+        }
+        newsDataSource.retrievedTrendingObject.observeForever {
+
+        }
+        newsDataSource.retrievedSearchObject.observeForever {
+            _newsObject.postValue(it)
+        }
+        newsDataSource.retrievedGlobalNews.observeForever {
             saveNews(it)
         }
     }
@@ -31,32 +44,25 @@ class NewsRepositoryImpl(
         }
     }
 
-    override suspend fun reload(): LiveData<NewsObject> {
-        return withContext(Dispatchers.IO) {
-            fetchCurrentNews()
-            return@withContext newsDao.getNews()
-        }
-    }
-
     private fun saveNews(newsObject: NewsObject) {
         GlobalScope.launch(Dispatchers.IO) {
             newsDao.upDate(newsObject)
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun initNewsData() {
         if (isFetchCurrentNewsNeeded(ZonedDateTime.now().minusHours(1)))
             fetchCurrentNews()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private suspend fun reloadNews() {
-            fetchCurrentNews()
+    private suspend fun fetchCurrentNews() {
+        newsDataSource.fetchGlobalNews("bbc-news")
+
     }
 
-    private suspend fun fetchCurrentNews() {
-        newsDataSource.fetchCurrentNews("bbc-news","top")
-
+    override suspend fun searchNews(query: String): NewsObject {
+        return newsDataSource.fetchSearchedNews(query)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -2,7 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <data>
+        <variable
+            name="viewModel"
+            type="com.mubaracktahir.news.ui.home.HomeViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,6 +17,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/view"
+            android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
@@ -24,79 +31,112 @@
 
                 <TextView
                     android:id="@+id/trending"
-                    android:visibility="visible"
                     style="@style/miniTitle"
-                    android:textSize="10sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Trending Topics"
-                    android:textColor="@color/splashFragmentBackground" />
+                    android:textColor="@color/splashFragmentBackground"
+                    android:textSize="10sp"
+                     />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/story_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:layout_height="100dp"
                     tools:listitem="@layout/story_recycler_item" />
+
                 <TextView
                     android:id="@+id/topnews"
-                    android:visibility="gone"
-                    android:textSize="10sp"
                     style="@style/miniTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Top News  "
                     android:textColor="@color/bottomNavigationTintColor"
+                    android:textSize="10sp"
                      />
+
+                <LinearLayout
+                    android:id="@+id/liner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal" />
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/horizontal_news_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="295dp"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                   />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/headlines"
-                    android:visibility="gone"
                     style="@style/miniTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
                     android:text="Head Lines"
-                    android:textSize="10sp"
-                    android:textColor="@color/bottomNavigationTintColor" />
+                    android:textColor="@color/bottomNavigationTintColor"
+                    android:textSize="10sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/news_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:itemCount="5"
                     tools:listitem="@layout/news_recycler_item" />
+                <TextView
+                    style="@style/miniTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif"
+                    android:layout_marginTop="30dp"
+                    android:text="Recommended For You"
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_margin="20dp"
+                    style="@style/miniTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="BASED ON YOUR INTEREST"
+                    android:textColor="@color/bottomNavigationTintColor"
+                    android:textSize="12sp" />
+
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/recommendedAdapter"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toTopOf="parent"
+                     tools:itemCount="5"
+                     tools:listitem="@layout/news_recycler_item" />
+
+                <TextView
                     style="@style/miniTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_margin="20dp"
                     android:text="Tap and Hold for more options"
-                    android:textSize="10sp"
-                    android:textColor="@color/bottomNavigationTintColor" />
+                    android:textColor="@color/bottomNavigationTintColor"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 

@@ -1,53 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="3dp"
-    app:cardCornerRadius="10dp"
-    android:outlineSpotShadowColor="@null"
-    android:outlineAmbientShadowColor="@null"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="article"
+            type="com.mubaracktahir.news.data.db.entity.Article" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="3dp"
+        android:orientation="vertical"
+        android:outlineAmbientShadowColor="@null"
+        android:outlineSpotShadowColor="@null"
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/article_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/background" />
+            <ImageView
+                android:id="@+id/article_image"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                tools:src="@drawable/background"
+                app:articleImage="@{article}"/>
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/viewParent.headerText"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textStyle="normal"
-            android:textSize="18sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:fontFamily="sans-serif"
-            tools:text="Google’s new free app teaches kids  \nto read by listening to them" />
+            <TextView
+                android:id="@+id/title"
+                style="@style/viewParent.headerText"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:maxLines="3"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                android:lineHeight="30dp"
 
-        <TextView
-            android:id="@+id/miniText"
-            style="@style/miniTitle"
-            android:maxLines="2"
-            android:textSize="15sp"
-            android:fontFamily="sans-serif"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/featuredNewsContentColor"
-            android:lineHeight="23dp"
-            tools:text="Google has just ripped the beta label off Rivet, its \nfree mobile app designed to help young children learn to read. " />
-        </LinearLayout>
+                app:articleTitle="@{article}"
+                tools:text="Google’s new free app teaches kids  \nto read by listening to them" />
+
+            <TextView
+                android:id="@+id/miniText"
+                style="@style/miniTitle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="sans-serif"
+                android:lineHeight="25dp"
+                android:maxLines="2"
+                android:textColor="@color/featuredNewsContentColor"
+                android:textSize="15sp"
+                app:articleDescription="@{article}"
+                tools:text="Google has just ripped the beta label off Rivet, its \nfree mobile app designed to help young children learn to read. " />
+            <TextView
+                android:id="@+id/date"
+                style="@style/viewParent.headerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="1 hour(s) ago"
+                android:layout_margin="10dp"
+                android:textColor="@color/featuredNewsContentColor"
+                android:textSize="11sp"
+                android:gravity="bottom"
+                />
+           </LinearLayout>
     </androidx.cardview.widget.CardView>
+</layout>

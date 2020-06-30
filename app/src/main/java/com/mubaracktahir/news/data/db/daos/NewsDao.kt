@@ -20,7 +20,7 @@ interface NewsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upDate(newsObject: NewsObject)
 
-    @Query("Select * from news_object where id = $ID")
+    @Query("Select * from news_table where id = $ID")
     fun getNews(): LiveData<NewsObject>
 
 }

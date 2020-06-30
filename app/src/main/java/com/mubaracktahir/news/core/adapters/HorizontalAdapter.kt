@@ -1,14 +1,12 @@
 package com.mubaracktahir.news.core.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.mubaracktahir.news.R
+import com.mubaracktahir.news.core.adapters.HorizontalAdapter.MyViewHolder.Companion.from
 import com.mubaracktahir.news.data.db.entity.Article
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.horizontal_new_recycler_item.view.*
+import com.mubaracktahir.news.databinding.HorizontalNewRecyclerItemBinding
 
 /**
  * Created by Mubarak Tahir on 6/19/2020.
@@ -16,19 +14,21 @@ import kotlinx.android.synthetic.main.horizontal_new_recycler_item.view.*
  * mubarack.tahirr@gmail.com
  */
 
-class HorizontalAdapter(val layout: Int, val articles: List<Article>) :
+class HorizontalAdapter :
     RecyclerView.Adapter<HorizontalAdapter.MyViewHolder>() {
-
+    var articles = listOf<Article>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
     private var listener: OnclickListener? = null
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): MyViewHolder {
-        val v: View =
-            LayoutInflater.from(parent.context).inflate(layout, parent, false)
-        return MyViewHolder(v)
-    }
 
+        return from(parent)
+    }
 
 
     fun setOnclickListener(listener: OnclickListener?) {
@@ -36,26 +36,33 @@ class HorizontalAdapter(val layout: Int, val articles: List<Article>) :
     }
 
     interface OnclickListener {
-        fun onItemClicked(note: Article,position: Int)
+        fun onItemClicked(note: Article, position: Int)
     }
 
-    inner class MyViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-        fun bindView(article: Article) {
+    override fun getItemCount() = articles.size
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val note: Article = articles.get(position)
+        holder.bindView(note)
+    }
 
-            Picasso.get()
-                .load(article.urlToImage)
-                .placeholder(R.drawable.background)
-                .into(itemView.article_image)
-            itemView.title.text = article.title
-            itemView.miniText.text = article.description
+    class MyViewHolder private constructor(val binding: HorizontalNewRecyclerItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bindView(article: Article) {
+            binding.article = article
+
+            binding.date.text = article.publishedAt
+            binding.executePendingBindings()
         }
-        init {
-            itemView.setOnClickListener {
-                val position = adapterPosition
-                if (listener != null) {
-                    listener!!.onItemClicked(articles.get(position),position)
-                }
+
+        companion object {
+            fun from(parent: ViewGroup): MyViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = HorizontalNewRecyclerItemBinding.inflate(
+                    layoutInflater, parent,
+                    false
+                )
+                return MyViewHolder(binding)
             }
         }
     }
@@ -71,21 +78,13 @@ class HorizontalAdapter(val layout: Int, val articles: List<Article>) :
                     oldItem: Article,
                     newItem: Article
                 ): Boolean {
-                    return oldItem.title == newItem.title
-                            && oldItem.description == newItem.description
-                            && oldItem.author == newItem.author
-                            && oldItem.publishedAt == newItem.publishedAt
-                            && oldItem.urlToImage == newItem.urlToImage
-                            && oldItem.url == newItem.url
-
+                    return oldItem == newItem
                 }
             }
     }
 
 
-    override fun getItemCount() = articles.size
-    override fun onBindViewHolder(holder: HorizontalAdapter.MyViewHolder, position: Int) {
-        val note: Article = articles.get(position)
-        holder.bindView(note)
-    }
 }
+
+
+

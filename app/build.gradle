@@ -41,7 +41,17 @@ android {
     }
 
 }
-
+//groovy
+configurations.all {
+    resolutionStrategy.force "org.antlr:antlr4-runtime:4.7.1"
+    resolutionStrategy.force "org.antlr:antlr4-tool:4.7.1"
+}
+//kotlin DSL
+configurations.all {
+    resolutionStrategy {
+        force("org.antlr:antlr4-runtime:4.7.1") force("org.antlr:antlr4-tool:4.7.1")
+    }
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -136,5 +146,10 @@ dependencies {
     implementation 'com.android.support:customtabs:27.1.1'
 
     implementation "com.squareup.picasso:picasso:2.71828"
+
+
+    //work manager
+    def work_version = "2.3.4"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
 }

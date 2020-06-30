@@ -4,11 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mubaracktahir.news.R
 import com.mubaracktahir.news.data.db.entity.Article
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.story_recycler_item.view.*
 
 
@@ -17,7 +15,14 @@ import kotlinx.android.synthetic.main.story_recycler_item.view.*
  * Mubby inc
  * mubarack.tahirr@gmail.com
  */
-class TrendingAdapter(val layout: Int ,val articles : List<Article>) : RecyclerView.Adapter<TrendingAdapter.MyViewHolder>(){
+
+enum class Category(name: String) {
+    BUSINESS("business"), SPORT("sport"), ENTERTAINMENT("entertainment"),
+    EDUCATION("education"), SCIENCE("science"), RELIGION("religion")
+}
+
+class TrendingAdapter(val layout: Int) :
+    RecyclerView.Adapter<TrendingAdapter.MyViewHolder>() {
     private var listener: OnclickListener? = null
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -29,33 +34,45 @@ class TrendingAdapter(val layout: Int ,val articles : List<Article>) : RecyclerV
     }
 
 
-
     fun setOnclickListener(listener: OnclickListener?) {
         this.listener = listener
     }
 
     interface OnclickListener {
-        fun onItemClicked(note: Article, position: Int)
+        fun onItemClicked(category: Category)
     }
 
     inner class MyViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        fun bindView(article: Article) {
-            Picasso.get()
-                .load(article.urlToImage)
-                .placeholder(R.drawable.background)
-                .into(itemView.profile_image)
+        fun bindView(position: Int) {
+            itemView.profile_image.setImageResource(image.get(position))
         }
 
         init {
             itemView.setOnClickListener {
-                val position = adapterPosition
                 if (listener != null) {
-                    listener!!.onItemClicked(articles.get(position),position)
+
                 }
             }
         }
     }
+
+    val list = arrayListOf<String>(
+        "Business",
+        "Sport",
+        "Entertainment",
+        "Education",
+        "Science",
+        "Religion"
+    )
+    val image = arrayListOf<Int>(
+        R.drawable.business,
+        R.drawable.sport,
+        R.drawable.entertaiment,
+        R.drawable.education,
+        R.drawable.science,
+        R.drawable.religion
+    )
 
     companion object {
         private val diffCallback: DiffUtil.ItemCallback<Article> =
@@ -80,9 +97,9 @@ class TrendingAdapter(val layout: Int ,val articles : List<Article>) : RecyclerV
     }
 
     override fun onBindViewHolder(holder: TrendingAdapter.MyViewHolder, position: Int) {
-        val note: Article = articles.get(position)
-        holder.bindView(note)
+        holder.itemView.trendingTitle.text = list[position]
+        holder.bindView(position)
     }
 
-    override fun getItemCount()= articles.size
+    override fun getItemCount() = list.size
 }

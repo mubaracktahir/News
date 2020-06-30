@@ -7,10 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.mubaracktahir.news.data.db.daos.NewsDao
 import com.mubaracktahir.news.data.db.entity.NewsObject
-import com.mubaracktahir.news.data.db.entity.NewsObject2
 import com.mubaracktahir.news.data.db.typeconverters.Converter
-import dagger.Provides
-import javax.inject.Singleton
 
 
 /**
@@ -21,7 +18,7 @@ import javax.inject.Singleton
 
 @Database(
     entities = [NewsObject::class],
-    version = 1
+    version = 2
 )
 @TypeConverters(Converter::class)
 abstract class NewsDataBase : RoomDatabase() {
@@ -35,7 +32,7 @@ abstract class NewsDataBase : RoomDatabase() {
             instance ?: buildDatabse(context).also { instance = it }
         }
         private fun buildDatabse(context: Context) =
-            Room.databaseBuilder(context.applicationContext, NewsDataBase::class.java, "news.db")
+            Room.databaseBuilder(context.applicationContext, NewsDataBase::class.java, "new.db")
                 .build()
     }
 }
