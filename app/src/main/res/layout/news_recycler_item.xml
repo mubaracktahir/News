@@ -15,30 +15,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> clickListener.onClick(article)}"
-        android:background="?android:attr/selectableItemBackground">
+        android:background="@color/bottomNavigationBackground">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:outlineAmbientShadowColor="@null"
-            app:cardBackgroundColor="@null"
             android:elevation="0dp"
             app:cardElevation="0dp"
+            android:background="@color/bottomNavigationBackground"
             android:outlineSpotShadowColor="@null"
             app:cardCornerRadius="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:layout_marginTop="15dp">
-
+                android:padding="20dp"
+                android:background="@color/bottomNavigationBackground"
+                >
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:background="@color/bottomNavigationBackground"
                     app:cardCornerRadius="7dp">
 
                     <ImageView

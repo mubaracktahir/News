@@ -9,12 +9,14 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/bottomNavigationBackground"
+        >
         <LinearLayout
             android:id="@+id/rootView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@null"
+            android:background="@color/bottomNavigationBackground"
             android:orientation="vertical"
             tools:context=".ui.search.SearchFragment">
 
@@ -31,7 +33,7 @@
                     style="@style/ToolBarStyle"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@android:color/white"
+                    android:background="@color/bottomNavigationBackground"
                     android:gravity="center"
                     app:contentScrim="@color/splashFragmentBackground"
                     app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
@@ -75,6 +77,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
+                tools:listitem="@layout/news_recycler_item"
                 android:text="Search from more than 50,000 News\narticles across the globe "
                 android:textColor="@color/bottomNavigationTintColor"
                 android:textStyle="normal" />
