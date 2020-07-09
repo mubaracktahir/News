@@ -7,10 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.mubaracktahir.news.data.db.daos.NewsDao
 import com.mubaracktahir.news.data.db.entity.NewsObject
 import com.mubaracktahir.news.data.network.NewsDataSourceImpl
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import okhttp3.internal.wait
 import java.time.ZonedDateTime
 
 class NewsRepositoryImpl(
@@ -58,7 +56,6 @@ class NewsRepositoryImpl(
 
     private suspend fun fetchCurrentNews() {
         newsDataSource.fetchGlobalNews("bbc-news")
-
     }
 
     override suspend fun searchNews(query: String): NewsObject {
@@ -70,5 +67,8 @@ class NewsRepositoryImpl(
         val fifteenMunitesAgo = ZonedDateTime.now().minusMinutes(15)
 
         return lastFetchTime.isBefore(fifteenMunitesAgo)
+
+
     }
+
 }

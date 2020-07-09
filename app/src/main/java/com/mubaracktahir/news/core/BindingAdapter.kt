@@ -17,6 +17,8 @@ import com.squareup.picasso.Picasso
  * mubarack.tahirr@gmail.com
  */
 
+
+
 @BindingAdapter("articleDescription")
 fun TextView.setDescription(article: Article?) {
     article?.let {

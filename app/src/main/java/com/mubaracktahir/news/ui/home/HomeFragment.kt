@@ -24,7 +24,9 @@ import com.mubaracktahir.news.R
 import com.mubaracktahir.news.core.adapters.Category
 import com.mubaracktahir.news.core.adapters.HorizontalAdapter
 import com.mubaracktahir.news.core.adapters.NewsAdapter
+import com.mubaracktahir.news.core.adapters.NewsAdapter.ArticleListener
 import com.mubaracktahir.news.core.adapters.TrendingAdapter
+import com.mubaracktahir.news.data.db.entity.Article
 import com.mubaracktahir.news.data.db.entity.NewsObject
 import com.mubaracktahir.news.databinding.HomeFragmentBinding
 import com.mubaracktahir.news.ui.MainActivity
@@ -34,8 +36,6 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 import timber.log.Timber
-import com.mubaracktahir.news.core.adapters.NewsAdapter.ArticleListener
-import com.mubaracktahir.news.data.db.entity.Article
 
 class HomeFragment : BaseFragment(), KodeinAware {
     private lateinit var viewModel: HomeViewModel
@@ -45,12 +45,16 @@ class HomeFragment : BaseFragment(), KodeinAware {
     lateinit var adapter: TrendingAdapter
     lateinit var adapter2: HorizontalAdapter
     lateinit var adapter3: NewsAdapter
+    val intent by lazy { customTabs.build() }
+    val customTabs by lazy {
+        CustomTabsIntent.Builder()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
         buildUI()
-        Timber.d("onCreateView")
         binding.setLifecycleOwner(this@HomeFragment)
 
 
@@ -59,8 +63,6 @@ class HomeFragment : BaseFragment(), KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Timber.d("onActivityCreated")
-
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
         binding.viewModel = viewModel
     }
@@ -81,12 +83,12 @@ class HomeFragment : BaseFragment(), KodeinAware {
     }
 
     fun setUpHeadLinesAdapter(it: NewsObject) {
-        adapter3 = NewsAdapter(ArticleListener{
-            article, position ->
-            var b = context?.applicationContext?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            var pp = arrayOf(0,1000,0)
+        adapter3 = NewsAdapter(ArticleListener { article, position ->
+            var b =
+                context?.applicationContext?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            var pp = arrayOf(0, 1000, 0)
             b.vibrate(30)
-            loadUrl(article,position)
+            loadUrl(article, position)
         })
         adapter3.articles = it.articles
         binding.newsRecycler.adapter = adapter3
@@ -100,6 +102,7 @@ class HomeFragment : BaseFragment(), KodeinAware {
         })
 
     }
+
 
     fun setUpTrendingAdapter(it: NewsObject) {
         adapter = TrendingAdapter(R.layout.story_recycler_item)
@@ -136,6 +139,7 @@ class HomeFragment : BaseFragment(), KodeinAware {
             }
         )
     }
+
     private fun addDot(position: Int, size: Int) {
         val textViews = arrayOfNulls<TextView>(size)
         binding.liner.removeAllViews()
@@ -158,10 +162,10 @@ class HomeFragment : BaseFragment(), KodeinAware {
 
     }
 
+
     fun loadUrl(article: Article, position: Int) {
 
         val url = article.url
-        var customTabs = CustomTabsIntent.Builder()
         customTabs.setToolbarColor(Color.parseColor("#C70000"))
         customTabs.setExitAnimations(this.context!!, 0, 0)
         customTabs.setStartAnimations(this.context!!, 0, 0)
@@ -180,7 +184,6 @@ class HomeFragment : BaseFragment(), KodeinAware {
                 this.context, 0, intent2, 0
             )
         )
-
 
         // this is actually a bad idea
         //temp from line 162 - 179
@@ -207,7 +210,6 @@ class HomeFragment : BaseFragment(), KodeinAware {
 
         // shares the HTML version of the open URL through
         customTabs.addDefaultShareMenuItem()
-        var intent = customTabs.build()
         intent.launchUrl(this.context, Uri.parse(url))
 
     }
@@ -222,10 +224,7 @@ class HomeFragment : BaseFragment(), KodeinAware {
             actionIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-
     }
-
-    lateinit var article: Article
 
     class BroadCastReceiver : BroadcastReceiver() {
 

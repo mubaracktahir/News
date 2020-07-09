@@ -32,13 +32,13 @@ class SearchViewModel(private val newsRepository: NewsRepository) : ViewModel() 
                 val searches = newsRepository.searchNews(query) as NewsObject
                 _searchResult.value = searches
             } catch (e: NoInternetEception) {
-                Timber.i("No,Internet Connection")
+                Timber.i("No,Internet Connection ${e.message}")
             } catch (d: SocketTimeoutException) {
-                Timber.d("Weak or no internet connection")
+                Timber.d("Weak or no internet Connection ${d.message}")
             } catch (i: SSLHandshakeException) {
-                Timber.d("Weak or no internet connection")
+                Timber.d("Weak or no internet Connection ${i.message}")
             } catch (d: ConnectException) {
-                Timber.d("Weak or no internet connection")
+                Timber.d("Weak or no internet Connection ${d.message}")
             }
 
         }
